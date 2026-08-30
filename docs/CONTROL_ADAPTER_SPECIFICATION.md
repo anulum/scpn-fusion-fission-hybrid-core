@@ -10,9 +10,10 @@ SCPN Fusion Fission Hybrid Core — CONTROL adapter specification
 
 # CONTROL adapter specification
 
-**Adapter identifier:** `scpn-fusion-fission-hybrid-core.control-adapter`  
+**Adapter identifier:** `scpn-fusion-fission-hybrid-core.control-adapter`
+
 **Contract version:** `0.1.0-spec` (specification only — **no implementation
-exists**)  
+exists**)
 **Consumer:** `SCPN-CONTROL` plugin protocol
 
 This document is the device-owned contract through which a future hybrid
