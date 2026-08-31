@@ -4,16 +4,21 @@
       "evidence_maturity": "computational_prototype",
       "evidence_pointer": "VALIDATION.md#device-configuration-model",
       "identifier": "device_configuration_model"
+    },
+    {
+      "evidence_maturity": "computational_prototype",
+      "evidence_pointer": "VALIDATION.md#diagnostic-and-clock-semantics",
+      "identifier": "diagnostic_clock_semantics"
     }
   ],
   "claims": [],
   "evidence_maturity": "computational_prototype",
-  "implemented_capability_count": 1,
+  "implemented_capability_count": 2,
   "project": "SCPN-FUSION-FISSION-HYBRID-CORE",
   "schema": "scpn.capability-inventory.v1",
   "schema_version": "1.0.0",
   "source": {
     "manifest_path": "reactor-domain.json",
-    "manifest_sha256": "d8f3cc124ecd00c6783c5e49c4722c64dcdb4282048c2d24ab40e7733d17fe0c"
+    "manifest_sha256": "b9bccf9671cc8539b91bf06b9ecbb61d8d639e597a822a47758e1f26ce9799b0"
   }
 }
