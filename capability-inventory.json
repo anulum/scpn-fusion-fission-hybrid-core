@@ -1,13 +1,19 @@
 {
-  "capabilities": [],
+  "capabilities": [
+    {
+      "evidence_maturity": "computational_prototype",
+      "evidence_pointer": "VALIDATION.md#device-configuration-model",
+      "identifier": "device_configuration_model"
+    }
+  ],
   "claims": [],
-  "evidence_maturity": "architecture_only",
-  "implemented_capability_count": 0,
+  "evidence_maturity": "computational_prototype",
+  "implemented_capability_count": 1,
   "project": "SCPN-FUSION-FISSION-HYBRID-CORE",
   "schema": "scpn.capability-inventory.v1",
   "schema_version": "1.0.0",
   "source": {
     "manifest_path": "reactor-domain.json",
-    "manifest_sha256": "5cde178c84af80ce9170b8afdfcafea68ee4b596b49c4f4b429f00d4bbb8861b"
+    "manifest_sha256": "d8f3cc124ecd00c6783c5e49c4722c64dcdb4282048c2d24ab40e7733d17fe0c"
   }
 }
