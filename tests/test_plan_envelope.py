@@ -42,7 +42,7 @@ from scpn_fusion_fission_hybrid_core.plan_envelope import (
 )
 
 FIXTURE = Path(__file__).parent / "data" / "plan_envelope_fixture.json"
-FIXTURE_SHA256 = "d9b57391c37114f98d73b160a2f18060dd928b1542001e460bf407ab6f6008de"
+FIXTURE_SHA256 = "e79737b73b783ba467fcfe42a3c2f3851fa4519d55b91769bb5e0cb55426f359"
 
 
 def fixture_document() -> dict[str, Any]:
@@ -132,6 +132,7 @@ def test_builder_rejects_empty_revision() -> None:
         ("schema", "scpn.other.v1", r"envelope\.schema"),
         ("schema_version", "9.9.9", "schema_version"),
         ("schema_version", "1.0.0", "schema_version"),
+        ("schema_version", "1.1.0", "schema_version"),
         ("project", "SCPN-OTHER-CORE", r"envelope\.project"),
         ("configurations", ("conventional_tokamak",), "owned set"),
         ("capability", "device_configuration_model", r"envelope\.capability"),
@@ -254,7 +255,7 @@ def test_bytes_parser_rejects_invalid_utf8() -> None:
 def test_constants_are_the_published_contract() -> None:
     """The public constants state the exchanged contract exactly."""
     assert ENVELOPE_SCHEMA == "scpn.reactor-diagnostic-plan-envelope.v1"
-    assert ENVELOPE_SCHEMA_VERSION == "1.1.0"
+    assert ENVELOPE_SCHEMA_VERSION == "1.2.0"
     assert PROJECT == "SCPN-FUSION-FISSION-HYBRID-CORE"
     assert NON_CLAIMS == (
         "no control action is proposed or authorised",
