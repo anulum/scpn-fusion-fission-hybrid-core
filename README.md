@@ -8,6 +8,11 @@ Contact: www.anulum.li | protoscience@anulum.li
 SCPN Fusion Fission Hybrid Core — README
 -->
 
+<div align="center">
+  <img src="docs/assets/repo_header.png"
+       alt="SCPN Fusion Fission Hybrid Core — A Source, A Blanket, No Chain">
+</div>
+
 # SCPN Fusion Fission Hybrid Core
 
 Governed device-family repository for fusion–fission hybrid systems within
