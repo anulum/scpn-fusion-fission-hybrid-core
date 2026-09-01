@@ -131,6 +131,7 @@ def channel_thermal() -> DiagnosticChannelPlan:
         clock_identifier="clk_shot",
         sample_rate_hz=1.0e1,
         max_signal_frequency_hz=0.0,
+        timing_uncertainty_s=None,
         acquisition_start_s=0.0,
         acquisition_duration_s=3600.0,
         element_count=1,
@@ -148,6 +149,7 @@ def channel_neutron_flux() -> DiagnosticChannelPlan:
         clock_identifier="clk_shot",
         sample_rate_hz=1.0e4,
         max_signal_frequency_hz=0.0,
+        timing_uncertainty_s=None,
         acquisition_start_s=0.0,
         acquisition_duration_s=3600.0,
         element_count=8,
@@ -165,6 +167,7 @@ def channel_oscillator() -> DiagnosticChannelPlan:
         clock_identifier="clk_sim",
         sample_rate_hz=1.0e4,
         max_signal_frequency_hz=0.0,
+        timing_uncertainty_s=None,
         acquisition_start_s=0.0,
         acquisition_duration_s=100.0,
         element_count=1,
@@ -365,6 +368,7 @@ def _noncyclic(**overrides: Any) -> DiagnosticChannelPlan:
         "clock_identifier": "clk_shot",
         "sample_rate_hz": 1.0e4,
         "max_signal_frequency_hz": 0.0,
+        "timing_uncertainty_s": None,
         "acquisition_start_s": 0.0,
         "acquisition_duration_s": 3600.0,
         "element_count": 8,
@@ -373,6 +377,38 @@ def _noncyclic(**overrides: Any) -> DiagnosticChannelPlan:
     }
     values.update(overrides)
     return DiagnosticChannelPlan(**values)
+
+
+def test_channel_rejects_timing_uncertainty() -> None:
+    """No applicable candidate is event-relative, so the member must be None."""
+    with pytest.raises(DiagnosticPlanError, match="only event-relative"):
+        _noncyclic(timing_uncertainty_s=1.0e-5)
+
+
+def test_record_carries_null_timing_uncertainty_on_every_channel() -> None:
+    """The portable record declares the member as null on every channel."""
+    record = synthetic_plan().to_record()
+    assert all(entry["timing_uncertainty_s"] is None for entry in record["channels"])
+    assert plan_from_record(record) == synthetic_plan()
+
+
+@pytest.mark.parametrize(
+    "value", [True, "1e-5", [1.0e-5], float("nan"), float("inf"), float("-inf")]
+)
+def test_parser_rejects_non_numeric_timing_uncertainty(value: Any) -> None:
+    """Only a finite number or null is accepted for the nullable member."""
+    record = synthetic_plan().to_record()
+    record["channels"][0]["timing_uncertainty_s"] = value
+    with pytest.raises(DiagnosticPlanError, match="number or null"):
+        plan_from_record(record)
+
+
+def test_parser_rejects_numeric_timing_uncertainty() -> None:
+    """A numeric value parses but the channel model refuses it."""
+    record = synthetic_plan().to_record()
+    record["channels"][0]["timing_uncertainty_s"] = 1.0e-5
+    with pytest.raises(DiagnosticPlanError, match="only event-relative"):
+        plan_from_record(record)
 
 
 def test_channel_rejects_malformed_identifier() -> None:
