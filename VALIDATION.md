@@ -267,3 +267,78 @@ above was read off the rendered page image instead.
 No parameter set describes any real machine, and nothing in the record
 is a criticality-safety, nuclear-safety, licensing, safeguards or
 proliferation-resistance statement.
+
+## Device 3D model
+
+Evidence record of the `device_3d_model` capability
+(`computational_prototype`; design record:
+`docs/adr/0006-device-3d-and-cad-models.md`).
+
+What is exercised, all under the 100 % statement-and-branch coverage gate:
+
+- Eight bodies in a fixed order — the plasma column and one per material
+  zone of the radial build — each a cylinder or an annular tube about `z`
+  from the shared kernel library.
+- **The anchor, twice over.** Table C1 of the filed report prints both the
+  zone thicknesses and the outer radii they produce. The geometry is
+  declared from the thicknesses alone, so all eight printed outer radii
+  are computed; every one comes back as the same IEEE double, asserted as
+  an equality with no tolerance. The stronger form of the same check reads
+  the outermost vertex of each built body back out and recovers the same
+  eight radii from the tessellation itself.
+- The vacuum zone carrying no body, and the first annulus therefore
+  beginning at the outer edge of that gap rather than at the plasma edge.
+- The tessellation losing exactly the inscribed polygon and nothing else:
+  the column volume over its closed form is `(n / 2 pi) sin(2 pi / n)` at
+  8, 64 and 256 segments, and the seven annuli together tile the space
+  between the gap and the outer radius to the same ratio.
+- A geometric fact the first version of its test got backwards: a thinner
+  zone further out can enclose more than a thicker one further in. The
+  printed reflector is 40 cm against the salt's 42 and encloses about
+  18 % more, because an annulus grows as `r_out^2 - r_in^2`.
+- Fail-closed refusal of every non-positive or non-finite field and of an
+  invalid segment count, each naming its field; a parser that refuses a
+  missing, unknown or mistyped field, booleans included.
+- The body set and its order validated on the container as well as in the
+  builder.
+- Canonical serialisation with a SHA-256 digest that moves with the
+  geometry, the segment count and the configuration.
+
+## Device CAD model
+
+Evidence record of the `device_cad_model` capability
+(`computational_prototype`; design record:
+`docs/adr/0006-device-3d-and-cad-models.md`).
+
+What is exercised, all under the 100 % statement-and-branch coverage gate:
+
+- The same eight bodies as exact B-rep solids through the shared library's
+  `cad` group, each checked fail-closed by the library's evidence kernel
+  against its analytic closed forms and against its tier-G1 twin, and
+  exported as normalised STEP bytes with a digest.
+- **Which deflection binds, measured for this family rather than copied.**
+  At the declared 1e-4 m and 0.02 rad the angular criterion binds: the
+  eight bodies span radii from one metre to two and a third and every
+  deficit agrees to about seven significant figures.
+- A coarser angular deflection of 0.1 rad is **refused**, and not on the
+  deficit bound but on the comparison against the tier-G1 reference,
+  naming the coolant channel — a five-millimetre annulus at a radius of a
+  metre and a half is what a coarse mesher breaks first.
+- A finer linear deflection of 1e-5 m is accepted but **narrows** the
+  margin, from about five times to about one and a half: it does improve
+  the faceting here, unlike in the tokamak family, but not as fast as it
+  tightens the bound `2 d / r`. Finer is not safer, and that is asserted.
+- Every body inside its declared bound, the narrowest margin at the
+  outermost body and still more than four times.
+- Fail-closed refusal of a manifest of the wrong schema or body count and
+  of bodies out of order, on the container itself.
+- STEP bytes present, their digest matching them, and two different builds
+  producing different bytes.
+- Canonical serialisation with a SHA-256 digest, and the model bound to
+  the configuration and geometry digests it was built from.
+
+Determinism of the STEP bytes is claimed within one pinned back-end
+environment only, never across back-end versions. No body carries the
+material it is named for, nothing here is a nuclear-safety,
+criticality-safety or licensing statement, and no value describes any
+real machine.

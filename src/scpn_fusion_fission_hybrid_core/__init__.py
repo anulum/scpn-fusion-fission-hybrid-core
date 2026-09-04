@@ -9,12 +9,14 @@
 """Device capability models of the SCPN fusion-fission-hybrid family.
 
 Public surface of the ``device_configuration_model``,
-``diagnostic_clock_semantics`` and ``level0_device_physics``
-capabilities at ``computational_prototype`` maturity: validated
-parameter objects, synthetic diagnostic and clock declarations aligned
-with the pinned SPO observability catalogue, the published closed-form
-figures of merit of a hybrid evaluated on a declared blanket, driver and
-fission-reactor pairing, documented consistency estimates, canonical
+``diagnostic_clock_semantics``, ``level0_device_physics``,
+``device_3d_model`` and ``device_cad_model`` capabilities at
+``computational_prototype`` maturity: validated parameter objects,
+synthetic diagnostic and clock declarations aligned with the pinned SPO
+observability catalogue, the published closed-form figures of merit of a
+hybrid evaluated on a declared blanket, driver and fission-reactor
+pairing, the tessellated and B-rep models of the radial build a filed
+source tabulates, documented consistency estimates, canonical
 serialisation with SHA-256 digests, and data-only pins to the SPO
 registries. No claim about any real machine or diagnostic is made
 anywhere in this package, and nothing here is a nuclear-safety,
@@ -36,7 +38,24 @@ from scpn_fusion_fission_hybrid_core.configuration import (
 )
 from scpn_fusion_fission_hybrid_core.errors import (
     DeviceConfigurationError,
+    DeviceGeometryError,
     DiagnosticPlanError,
+)
+from scpn_fusion_fission_hybrid_core.geometry import (
+    BODY_NAMES,
+    CAD_MODEL_NON_CLAIMS,
+    CAD_MODEL_SCHEMA,
+    CAD_MODEL_SCHEMA_VERSION,
+    GEOMETRY_FIELDS,
+    MODEL_NON_CLAIMS,
+    MODEL_SCHEMA,
+    MODEL_SCHEMA_VERSION,
+    DeviceGeometry,
+    DeviceModel3D,
+    DeviceModelCAD,
+    build_device_cad,
+    build_device_model,
+    geometry_from_record,
 )
 from scpn_fusion_fission_hybrid_core.observability import (
     APPLICABLE_CANDIDATES,
@@ -90,15 +109,23 @@ __version__: Final = "0.1.0.dev0"
 
 __all__ = [
     "APPLICABLE_CANDIDATES",
+    "BODY_NAMES",
+    "CAD_MODEL_NON_CLAIMS",
+    "CAD_MODEL_SCHEMA",
+    "CAD_MODEL_SCHEMA_VERSION",
     "CATALOGUE_BINDING",
     "CRITICALITY_MARGIN_KEFF",
     "DT_FUSION_ENERGY_MEV",
     "DT_NEUTRON_FRACTION",
     "FERTILE_CLASSES",
     "FISSION_ENERGY_MEV",
+    "GEOMETRY_FIELDS",
     "LEVEL0_NON_CLAIMS",
     "LEVEL0_SCHEMA",
     "LEVEL0_SCHEMA_VERSION",
+    "MODEL_NON_CLAIMS",
+    "MODEL_SCHEMA",
+    "MODEL_SCHEMA_VERSION",
     "OWNED_CONFIGURATIONS",
     "CandidateProfile",
     "ClockKind",
@@ -108,6 +135,10 @@ __all__ = [
     "DeferredCandidate",
     "DeviceConfiguration",
     "DeviceConfigurationError",
+    "DeviceGeometry",
+    "DeviceGeometryError",
+    "DeviceModel3D",
+    "DeviceModelCAD",
     "DiagnosticChannelPlan",
     "DiagnosticPlan",
     "DiagnosticPlanError",
@@ -124,11 +155,14 @@ __all__ = [
     "SemanticCarrier",
     "SubcriticalBlanket",
     "__version__",
+    "build_device_cad",
+    "build_device_model",
     "configuration_from_bytes",
     "configuration_from_record",
     "envelope_for_plan",
     "envelope_from_bytes",
     "envelope_from_record",
+    "geometry_from_record",
     "hybrid_electrical_efficiency",
     "level0_physics",
     "offline_capacity_ratio",

@@ -22,7 +22,7 @@ of the SCPN Phase Orchestrator reactor registry (fusion source with
 subcritical blanket).
 
 **Evidence maturity: `computational_prototype`** (per-capability; ADR 0002).
-Three capabilities are implemented: the device configuration model —
+Five capabilities are implemented: the device configuration model —
 validated parameter objects with documented consistency estimates,
 canonical serialisation, and a data-only SPO registry pin
 (evidence: `VALIDATION.md#device-configuration-model`); the
@@ -35,7 +35,12 @@ thermal power it produces for the fusion power it consumes and the
 fission reactors the bred fuel supports, evaluated on a declared
 blanket, driver and fission-reactor pairing and anchored on values a
 filed source prints (ADR 0005, evidence:
-`VALIDATION.md#level-0-device-physics`). No parameter set or
+`VALIDATION.md#level-0-device-physics`); and the two geometry tiers —
+the tessellated and B-rep models of the radial build, whose zone
+thicknesses are declared so that every outer radius the filed source
+prints is recovered rather than restated (ADR 0006, evidence:
+`VALIDATION.md#device-3d-model` and `VALIDATION.md#device-cad-model`).
+No parameter set or
 channel describes any real machine or diagnostic; the claim inventory
 is empty and verified by the domain validator.
 
