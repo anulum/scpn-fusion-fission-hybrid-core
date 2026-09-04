@@ -8,11 +8,13 @@
 
 """Device capability models of the SCPN fusion-fission-hybrid family.
 
-Public surface of the ``device_configuration_model`` and
-``diagnostic_clock_semantics`` capabilities at
-``computational_prototype`` maturity: validated parameter objects,
-synthetic diagnostic and clock declarations aligned with the pinned SPO
-observability catalogue, documented consistency estimates, canonical
+Public surface of the ``device_configuration_model``,
+``diagnostic_clock_semantics`` and ``level0_device_physics``
+capabilities at ``computational_prototype`` maturity: validated
+parameter objects, synthetic diagnostic and clock declarations aligned
+with the pinned SPO observability catalogue, the published closed-form
+figures of merit of a hybrid evaluated on a declared blanket, driver and
+fission-reactor pairing, documented consistency estimates, canonical
 serialisation with SHA-256 digests, and data-only pins to the SPO
 registries. No claim about any real machine or diagnostic is made
 anywhere in this package, and nothing here is a nuclear-safety,
@@ -59,6 +61,23 @@ from scpn_fusion_fission_hybrid_core.parameters import (
     NeutronSource,
     SubcriticalBlanket,
 )
+from scpn_fusion_fission_hybrid_core.physics import (
+    DT_FUSION_ENERGY_MEV,
+    DT_NEUTRON_FRACTION,
+    FISSION_ENERGY_MEV,
+    LEVEL0_NON_CLAIMS,
+    LEVEL0_SCHEMA,
+    LEVEL0_SCHEMA_VERSION,
+    HybridInputs,
+    Level0Physics,
+    OperatingPoint,
+    hybrid_electrical_efficiency,
+    level0_physics,
+    offline_capacity_ratio,
+    online_capacity_ratio,
+    supported_fission_reactors,
+    thermal_power_ratio,
+)
 from scpn_fusion_fission_hybrid_core.plan_envelope import (
     PlanEnvelope,
     envelope_for_plan,
@@ -73,7 +92,13 @@ __all__ = [
     "APPLICABLE_CANDIDATES",
     "CATALOGUE_BINDING",
     "CRITICALITY_MARGIN_KEFF",
+    "DT_FUSION_ENERGY_MEV",
+    "DT_NEUTRON_FRACTION",
     "FERTILE_CLASSES",
+    "FISSION_ENERGY_MEV",
+    "LEVEL0_NON_CLAIMS",
+    "LEVEL0_SCHEMA",
+    "LEVEL0_SCHEMA_VERSION",
     "OWNED_CONFIGURATIONS",
     "CandidateProfile",
     "ClockKind",
@@ -87,9 +112,12 @@ __all__ = [
     "DiagnosticPlan",
     "DiagnosticPlanError",
     "FrameKind",
+    "HybridInputs",
+    "Level0Physics",
     "NeutronSource",
     "ObservabilityBinding",
     "ObservabilityClass",
+    "OperatingPoint",
     "PlanEnvelope",
     "ReferenceFrame",
     "RegistryBinding",
@@ -101,7 +129,13 @@ __all__ = [
     "envelope_for_plan",
     "envelope_from_bytes",
     "envelope_from_record",
+    "hybrid_electrical_efficiency",
+    "level0_physics",
+    "offline_capacity_ratio",
+    "online_capacity_ratio",
     "plan_from_bytes",
     "plan_from_record",
+    "supported_fission_reactors",
+    "thermal_power_ratio",
     "verify_envelope",
 ]

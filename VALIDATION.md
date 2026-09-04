@@ -215,3 +215,55 @@ gate:
   domain (`clk_facility` root, `clk_shot` member); multi-domain rules
   are exercised by test-constructed plans. Scopes are declarations;
   `mapping_state` stays `unmapped`.
+
+## Level-0 device physics
+
+Evidence record of the `level0_device_physics` capability
+(`computational_prototype`; design record:
+`docs/adr/0005-level0-device-physics.md`).
+
+What is exercised, all under the 100 % statement-and-branch coverage gate:
+
+- The four published figures of merit of a fusion-fission hybrid: the
+  thermal power ratio (equation 1), the hybrid electrical efficiency
+  (equation 2), the off-line and on-line capacity ratios (equations 6
+  and 7), and the number of fission reactors supported (equation 4).
+- Their agreement where the source states one: equation 7 against the
+  form of equation 5, over a sweep of driver and blanket values. The
+  agreement is asserted within a relative tolerance and not as an
+  equality, because measurement over 6372 parameter points showed 317 of
+  them disagreeing in the last places — the two forms group the same
+  factors differently, and floating-point multiplication is not
+  associative.
+- Fail-closed refusal of every declared input outside its documented
+  interval, each naming its field, both at the relation and at the
+  declaration. Nothing is clamped. A conversion ratio of one or more is
+  refused rather than reduced, because a fission reactor that needs no
+  fissile makeup supports no hybrid.
+- The record's two multiplications reported separately and derived from
+  each other in neither direction: the declared blanket **energy**
+  multiplication, and the **neutron** multiplication `1 / (1 - k_eff)`
+  the configuration's own blanket computes. A test moves one and shows
+  the other stand still.
+- Canonical serialisation with a SHA-256 digest, its idempotence under
+  re-canonicalisation, and its movement under a changed configuration.
+
+Anchors — six numbers ORNL/PPA-79/3 prints, each recovered **from a
+built record or a built relation** rather than stored beside one:
+
+| Printed | Where | Recovered |
+|---|---|---|
+| `1.33` | denominator of equation 17 | exactly, as the same IEEE double |
+| `R_o = 68` | equation 19 | 68.15 |
+| `Q' ~ 1.4` for electrical self-sufficiency | page 26 | 1.396 |
+| thorium supports 3–5× the uranium blankets | page 10, first noteworthy point | 4.70 fresh, 4.03 exposed |
+| a larger blanket multiplication reaches its ceiling at a lower `Q'` | page 10, second noteworthy point | asserted as the identity `Q'B/(1+Q'B)` |
+| ~3 % fissile buildup roughly halves the reactor number | page 10, third noteworthy point | 2.08 uranium, 2.42 thorium |
+
+The filed copy is a scan whose OCR text layer mangles digits — it renders
+the 17.0 of Table 1 as `]7.0` and the 5 of Table C4 as `J`. Every value
+above was read off the rendered page image instead.
+
+No parameter set describes any real machine, and nothing in the record
+is a criticality-safety, nuclear-safety, licensing, safeguards or
+proliferation-resistance statement.
