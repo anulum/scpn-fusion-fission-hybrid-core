@@ -72,7 +72,7 @@
     "manifest_path": "reactor-domain.json",
     "manifest_schema": "scpn.reactor-domain.v1",
     "manifest_schema_version": "1.0.0",
-    "manifest_sha256": "3285ec7ee6f9f51eccd2cfe5efff25d4214b6a245c2e412010c938277892a255",
+    "manifest_sha256": "5d0408682f699b521fd505c66c00ea597b3e59ba2df8e4075127110e4697535c",
     "repository": "SCPN-FUSION-FISSION-HYBRID-CORE"
   },
   "spo_registry": {
